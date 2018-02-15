@@ -40,17 +40,6 @@ python3 manuf.py -u
 #from socket import inet_aton,inet_ntoa
 import manuf
 
-# def ip2long(ip):
-#     packed = inet_aton(ip)
-#     lng = struct.unpack("!L", packed)[0]
-#     return lng
-
-
-# def long2ip(lng):
-#     packed = struct.pack("!L", lng)
-#     ip=inet_ntoa(packed)
-#     return ip
-
 #create a space between the command line and the output
 print()
 p = manuf.MacParser()
@@ -66,36 +55,32 @@ i = len(listname)-1
 counter = 0
 IPs = []
 data = {}
-#data2 = {}
 while counter <= i:
     IP = listname[counter]
-    #Remove Enter
+#Remove Enter
     IP = IP.strip('\n')
+#skip any line with the command
     if IP.find('show') != -1:
         counter = counter + 1
         continue
 #extract MAC Address
 #   2    6cb2.ae09.f8c4    DYNAMIC     Gi2/0/2
     Mac = IP
-#    MacAndVlan = IP
     Dot = Mac.find('.')
     Mac = Mac[Dot-4:Dot+10].rstrip('')
-#    print(Mac)
+#pull the manufacturer with manuf
     manufacture = p.get_all(Mac)
- #   MacAndVlan = MacAndVlan[38:70].rstrip('')
- #   MacAndVlan = MacAndVlan.replace('ARPA   Vlan','')
-    
-
+#strip out the word DYNAMIC
     IP = IP.replace('DYNAMIC    ','')
+#Build the string
     IP = IP + "   " + str(manufacture)
     IPs.append(str(IP))
     IPs.append('****************************************************************************')
     counter = counter + 1
 d = int(len(IPs)/2) 
-print (' # Entries: %s ' %d)
+print ('Number Entries: %s ' %d)
+print()
 print('Vlan     MAC Address      Interface')
-#find the manufacturer from the mac address
-
 
 for IP in IPs:
     print(IP)
