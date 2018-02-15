@@ -10,7 +10,7 @@ show mac add int g1/0/2 | i Gi
 show mac add int g1/0/3 | i Gi
 show mac add int g1/0/4 | i Gi
 
-and create a list of Vlan, Mac Address and interface.
+and create a list of Vlan, Mac Address, interface and manufacturer.
 
 
 test-switch#show mac add int g1/0/1 | i Gi
@@ -29,6 +29,10 @@ Vlan     MAC Address      Interface
   10    0c4d.e9c1.4a0d     Gi1/0/3
 **************************************
 
+Uses the Parser library for Wireshark's OUI database from https://github.com/coolbho3k/manuf to convert the MAC to a manufacture.
+The database needs to be updated occaisionally using: 
+
+python3 manuf.py -u
 
 '''
 #from socket import inet_aton
