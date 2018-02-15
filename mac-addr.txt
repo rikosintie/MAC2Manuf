@@ -1,0 +1,165 @@
+BRWN-IDFB-STK1-2#show mac add int g1/0/1 | i Gi
+  10    8434.97a7.708b    DYNAMIC     Gi1/0/1
+BRWN-IDFB-STK1-2#show mac add int g1/0/2 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/3 | i Gi
+  10    0c4d.e9c1.4a0d    DYNAMIC     Gi1/0/3
+BRWN-IDFB-STK1-2#show mac add int g1/0/4 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/5 | i Gi
+  10    0c4d.e9c1.363c    DYNAMIC     Gi1/0/5
+BRWN-IDFB-STK1-2#show mac add int g1/0/6 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/7 | i Gi
+  10    8434.97a7.40ee    DYNAMIC     Gi1/0/7
+BRWN-IDFB-STK1-2#show mac add int g1/0/8 | i Gi
+  10    0c4d.e9b9.a99e    DYNAMIC     Gi1/0/8
+BRWN-IDFB-STK1-2#show mac add int g1/0/9 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/10 | i Gi
+  10    0c4d.e9b9.99cc    DYNAMIC     Gi1/0/10
+BRWN-IDFB-STK1-2#show mac add int g1/0/11 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/12 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/13 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/14 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/15 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/16 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/17 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/18 | i Gi
+  10    2892.4ab7.690f    DYNAMIC     Gi1/0/18
+BRWN-IDFB-STK1-2#show mac add int g1/0/19 | i Gi
+  10    a4ee.576f.0365    DYNAMIC     Gi1/0/19
+BRWN-IDFB-STK1-2#show mac add int g1/0/20 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/21 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/22 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/23 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/24 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/25 | i Gi
+  10    ac18.261c.6efe    DYNAMIC     Gi1/0/25
+BRWN-IDFB-STK1-2#show mac add int g1/0/26 | i Gi
+  10    2892.4ab9.ddd3    DYNAMIC     Gi1/0/26
+BRWN-IDFB-STK1-2#show mac add int g1/0/27 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/28 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/29 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/30 | i Gi
+  10    a4ee.576f.038b    DYNAMIC     Gi1/0/30
+BRWN-IDFB-STK1-2#show mac add int g1/0/31 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/32 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/33 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/34 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/35 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/36 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/37 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/38 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/39 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/40 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/41 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/42 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/43 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/44 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/45 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/46 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/47 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/48 | i Gi
+  10    0c4d.e9c1.3138    DYNAMIC     Gi1/0/48
+BRWN-IDFB-STK1-2#show mac add int g1/0/49 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g1/0/50 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/1 | i Gi
+   2    380e.4df9.86b0    DYNAMIC     Gi2/0/1
+ 212    a888.08d2.2ffb    DYNAMIC     Gi2/0/1
+ 212    a888.08d8.916c    DYNAMIC     Gi2/0/1
+ 212    a888.08da.2164    DYNAMIC     Gi2/0/1
+ 212    a888.08db.370c    DYNAMIC     Gi2/0/1
+ 212    a888.08db.4a26    DYNAMIC     Gi2/0/1
+ 212    a888.08dd.8e50    DYNAMIC     Gi2/0/1
+ 212    a888.08e0.35da    DYNAMIC     Gi2/0/1
+ 212    a888.08e1.03f9    DYNAMIC     Gi2/0/1
+ 212    a888.08e1.4534    DYNAMIC     Gi2/0/1
+ 212    a888.08e2.1ad8    DYNAMIC     Gi2/0/1
+ 212    a888.08e3.32d5    DYNAMIC     Gi2/0/1
+ 212    a888.08e3.60ec    DYNAMIC     Gi2/0/1
+ 254    a888.08d3.0cbb    DYNAMIC     Gi2/0/1
+ 254    b878.2e41.0ddd    DYNAMIC     Gi2/0/1
+ 254    b878.2e54.3a5a    DYNAMIC     Gi2/0/1
+BRWN-IDFB-STK1-2#show mac add int g2/0/2 | i Gi
+   2    6cb2.ae09.f8c4    DYNAMIC     Gi2/0/2
+ 212    5c97.f3a9.ef87    DYNAMIC     Gi2/0/2
+ 212    5c97.f3b1.bcd6    DYNAMIC     Gi2/0/2
+ 212    a888.08e1.e2b7    DYNAMIC     Gi2/0/2
+ 254    f862.148e.feca    DYNAMIC     Gi2/0/2
+BRWN-IDFB-STK1-2#show mac add int g2/0/3 | i Gi
+   2    380e.4df9.87e4    DYNAMIC     Gi2/0/3
+ 217    8863.dfa6.35b7    DYNAMIC     Gi2/0/3
+ 217    8863.dfab.024b    DYNAMIC     Gi2/0/3
+ 254    9c20.7b82.d042    DYNAMIC     Gi2/0/3
+BRWN-IDFB-STK1-2#show mac add int g2/0/4 | i Gi
+   2    7070.8bd0.417c    DYNAMIC     Gi2/0/4
+ 217    8863.dfaa.80a7    DYNAMIC     Gi2/0/4
+ 254    b878.2e55.41f4    DYNAMIC     Gi2/0/4
+BRWN-IDFB-STK1-2#show mac add int g2/0/5 | i Gi
+   2    380e.4df9.86b4    DYNAMIC     Gi2/0/5
+ 212    5c97.f39f.6933    DYNAMIC     Gi2/0/5
+ 212    a888.08de.459b    DYNAMIC     Gi2/0/5
+ 212    a888.08e4.6d23    DYNAMIC     Gi2/0/5
+ 254    80e6.505a.4c0e    DYNAMIC     Gi2/0/5
+ 254    a888.08d1.7fc8    DYNAMIC     Gi2/0/5
+ 254    a888.08d4.c44a    DYNAMIC     Gi2/0/5
+ 254    b878.2e3f.3a61    DYNAMIC     Gi2/0/5
+BRWN-IDFB-STK1-2#show mac add int g2/0/6 | i Gi
+   2    6cb2.ae09.f7b0    DYNAMIC     Gi2/0/6
+ 212    a888.08d9.7e37    DYNAMIC     Gi2/0/6
+ 254    b878.2e52.7cf8    DYNAMIC     Gi2/0/6
+ 254    ec35.862f.88d0    DYNAMIC     Gi2/0/6
+ 254    ec35.8632.732c    DYNAMIC     Gi2/0/6
+BRWN-IDFB-STK1-2#show mac add int g2/0/7 | i Gi
+   1    7cad.7450.1042    DYNAMIC     Gi2/0/7
+   2    7cad.7450.1042    DYNAMIC     Gi2/0/7
+ 212    a888.08e4.453f    DYNAMIC     Gi2/0/7
+BRWN-IDFB-STK1-2#show mac add int g2/0/8 | i Gi
+ 250    0016.6cc2.077b    DYNAMIC     Gi2/0/8
+BRWN-IDFB-STK1-2#show mac add int g2/0/9 | i Gi
+ 250    0016.6cc2.0775    DYNAMIC     Gi2/0/9
+BRWN-IDFB-STK1-2#show mac add int g2/0/10 | i Gi
+ 250    0016.6cc2.0774    DYNAMIC     Gi2/0/10
+BRWN-IDFB-STK1-2#show mac add int g2/0/11 | i Gi
+ 250    0016.6cc2.0773    DYNAMIC     Gi2/0/11
+BRWN-IDFB-STK1-2#show mac add int g2/0/12 | i Gi
+ 250    3c07.7135.2c8e    DYNAMIC     Gi2/0/12
+BRWN-IDFB-STK1-2#show mac add int g2/0/13 | i Gi
+ 250    3c07.7135.2c81    DYNAMIC     Gi2/0/13
+BRWN-IDFB-STK1-2#show mac add int g2/0/14 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/15 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/16 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/17 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/18 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/19 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/20 | i Gi
+  10    8434.97a7.709a    DYNAMIC     Gi2/0/20
+BRWN-IDFB-STK1-2#show mac add int g2/0/21 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/22 | i Gi
+  10    10dd.b1d0.3121    DYNAMIC     Gi2/0/22
+BRWN-IDFB-STK1-2#show mac add int g2/0/23 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/24 | i Gi
+  10    10dd.b1d0.040f    DYNAMIC     Gi2/0/24
+BRWN-IDFB-STK1-2#show mac add int g2/0/25 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/26 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/27 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/28 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/29 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/30 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/31 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/32 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/33 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/34 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/35 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/36 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/37 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/38 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/39 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/40 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/41 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/42 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/43 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/44 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/45 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/46 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/47 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/48 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/49 | i Gi
+BRWN-IDFB-STK1-2#show mac add int g2/0/50 | i Gi
