@@ -4,9 +4,9 @@ Convert the output from "show mac add int g1/0/1 | i Gi" to the manufacturer nam
 Requires Wireshark, because it uses Michael Huang's manuf python library at [Parser library for Wireshark's OUI database.](https://github.com/coolbho3k/manuf)
 Requires Python 3.x
 
-Useful when you are looking for a specific brand device and have a lot of ports to review. I think this would also be useful when replacing a switch. Run it before the cutover and save the results, then run it after the cutover and use Meld or your favorite comparison tool to make sure all MACs are in the correct port.
+Useful when you are looking for a specific brand device and have a lot of ports to review. I think this would also be useful when replacing a switch. Run it before the cutover and save the results, then run it after the cutover and use [Meld](meldmerge.org) or your favorite comparison tool to make sure all MACs are in the correct port.
 
-The included spreadsheet has the show commands for Gigabit, FastEthernet and a FEX switch pre-built.
+The included spreadsheet has the show commands for Gigabit, FastEthernet, the old 3550 and a FEX switch pre-built.
 
 The output will look similar to this:
 ```
