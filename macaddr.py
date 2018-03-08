@@ -3,6 +3,7 @@ References:
 https://stackoverflow.com/questions/6545023/how-to-sort-ip-addresses-stored-in-dictionary-in-python/6545090#6545090
 https://stackoverflow.com/questions/20944483/python-3-sort-a-dict-by-its-values
 https://docs.python.org/3.3/tutorial/datastructures.html
+https://www.quora.com/How-do-I-write-a-dictionary-to-a-file-in-Python
 
 read mac-addr.txt containing the output of
 show mac add int g1/0/1 | i Gi
@@ -34,13 +35,54 @@ The database needs to be updated occaisionally using:
 python3 manuf.py -u
 
 '''
-#from socket import inet_aton
-#import struct
-#from socket import inet_aton,inet_ntoa
+# Changelog
+# March 7, 2018
+# Added code to read Mac2IP.json and save it as a dictionary.
+# Mac2IP.json is created by running arp.py against the output "show ip arp" or "sh ip arp vlan x" on a core switch
+# if Mac2IP.json is found in the same directory as macaddr.py it adds the IP address to the output.
+# if Mac2IP.json is not found the IP address is not added
+# Vlan     MAC Address      Interface      IP           Vendor
+#   20    f8b1.56d2.3c13     Gi1/0/3   10.129.20.70    Vendor(manuf='Dell', comment=None)
+# ****************************************************************************
+#   20    0011.431b.b291     Gi1/0/16   10.129.20.174    Vendor(manuf='Dell', comment=None)
+# ****************************************************************************
+
 import manuf
+import sys
+import json
+
+vernum = '1.0'
+def version():
+    """
+    This function prints the version of this program. It doesn't allow any argument.
+    """
+    print("+----------------------------------------------------------------------+")
+    print("| "+ sys.argv[0] + " Version "+ vernum +"                                               |")
+    print("| This program is free software; you can redistribute it and/or modify |")
+    print("| it in any way you want. If you improve it please send me a copy at   |")
+    print("| the email address below.                                             |")
+    print("|                                                                      |")
+    print("| Author: Michael Hubbard, michael.hubbard999@gmail.com                |")
+    print("|         mwhubbard.blogspot.com                                       |")
+    print("|         @rikosintie                                                  |")
+    print("+----------------------------------------------------------------------+")
+
+version()
 
 #create a space between the command line and the output
 print()
+#create an empty dictionary to hold the mac-IP data
+Mac_IP = {}
+IP_Data = ''
+#Open the json created by arp.py if it exists
+mydatafile = 'Mac2IP.json'
+try:
+    with open(mydatafile) as f:
+        Mac_IP = json.load(f)
+except FileNotFoundError: 
+    print(mydatafile + ' does not exist')
+    mydatafile = None
+
 p = manuf.MacParser()
 #create a blank list to accept each line in the file
 data = []
@@ -49,10 +91,9 @@ try:
 except FileNotFoundError:
             print('mac-addr.txt does not exist')
 else:    
-#f = open('vlans.txt', 'r')
     for line in f:
 #strip out empty lines
-        if line.strip():
+        if line.find('DYNAMIC'):
             data.append(line)
     f.close
 ct = len(data)-1
@@ -72,19 +113,24 @@ while counter <= ct:
     L = str.split(IP)
     Mac = L[1]
 #    print(Mac)
+    if Mac in Mac_IP:
+        IP_Data = Mac_IP[Mac]
+
 #pull the manufacturer with manuf
     manufacture = p.get_all(Mac)
 #strip out the word DYNAMIC
     IP = IP.replace('DYNAMIC    ','')
 #Build the string
-    IP = IP + "   " + str(manufacture)
+    IP = IP + "   "  + IP_Data + "    " + str(manufacture)
     IPs.append(str(IP))
     IPs.append('****************************************************************************')
     counter = counter + 1
 d = int(len(IPs)/2) 
 print ('Number Entries: %s ' %d)
 print()
-print('Vlan     MAC Address      Interface')
-
+if mydatafile:
+    print('Vlan     MAC Address      Interface      IP           Vendor')
+else:
+    print('Vlan     MAC Address      Interface      Vendor')
 for IP in IPs:
     print(IP)
