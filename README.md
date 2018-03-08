@@ -36,4 +36,17 @@ Vlan     MAC Address      Interface
   10    0c4d.e9c1.363c     Gi1/0/5   Vendor(manuf='Apple', comment=None)
 ****************************************************************************
 ```
+**Add the IP address**
+
+You can use the python script arp.py [ARP-Sort](https://github.com/rikosintie/ARP-Sort) to convert the output of `show ip arp` on a core switch to MAC addresses/IP Addresses. It also creates a JSON file that macaddr.py can read. If you create the json file before running macaddr.py you will get output that looks like this:
+```
+Number Entries: 49 
+
+Vlan     MAC Address      Interface      IP           Vendor
+  20    f8b1.56d2.3c13     Gi1/0/3   10.129.20.70    Vendor(manuf='Dell', comment=None)
+****************************************************************************
+  20    0011.431b.b291     Gi1/0/16   10.129.20.174    Vendor(manuf='Dell', comment=None)
+****************************************************************************
+```
+
 
