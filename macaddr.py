@@ -4,6 +4,7 @@ https://stackoverflow.com/questions/6545023/how-to-sort-ip-addresses-stored-in-d
 https://stackoverflow.com/questions/20944483/python-3-sort-a-dict-by-its-values
 https://docs.python.org/3.3/tutorial/datastructures.html
 https://www.quora.com/How-do-I-write-a-dictionary-to-a-file-in-Python
+https://www.programiz.com/python-programming/break-continue
 
 read mac-addr.txt containing the output of
 show mac add int g1/0/1 | i Gi
@@ -34,24 +35,41 @@ The database needs to be updated occaisionally using:
 
 python3 manuf.py -u
 
+
+Changelog
+March 7, 2018
+Added code to read Mac2IP.json and save it as a dictionary.
+Mac2IP.json is created by running arp.py against the output "show ip arp" or "sh ip arp vlan x" on a core switch
+if Mac2IP.json is found in the same directory as macaddr.py it adds the IP address to the output.
+if Mac2IP.json is not found the IP address is not added
+Vlan     MAC Address      Interface      IP           Vendor
+   20    f8b1.56d2.3c13     Gi1/0/3   10.129.20.70    Vendor(manuf='Dell', comment=None)
+ ****************************************************************************
+   20    0011.431b.b291     Gi1/0/16   10.129.20.174    Vendor(manuf='Dell', comment=None)
+ ****************************************************************************
+
+ March 24, 2018
+ Added an MD5 hash function to the list of MAC addresses. This gives a quick comparison of the before
+ and after is some cables got swapped but are on the correct vlan.
+ Added a sorted output of the MAC addresses. If there are differences before and after you 
+ can save the list of MACs and use MELD or Notepad++ (with the compare plugin) to see what is different.
+ 
+ Hash of all the MAC addresses
+ 6449620420f0d67bffd26b65e9a824a4
+
+ Sorted list of MAC Addresses
+ 0018.c840.1295
+ 0018.c840.12a8
+ 0027.0dbd.9f6e
+
 '''
-# Changelog
-# March 7, 2018
-# Added code to read Mac2IP.json and save it as a dictionary.
-# Mac2IP.json is created by running arp.py against the output "show ip arp" or "sh ip arp vlan x" on a core switch
-# if Mac2IP.json is found in the same directory as macaddr.py it adds the IP address to the output.
-# if Mac2IP.json is not found the IP address is not added
-# Vlan     MAC Address      Interface      IP           Vendor
-#   20    f8b1.56d2.3c13     Gi1/0/3   10.129.20.70    Vendor(manuf='Dell', comment=None)
-# ****************************************************************************
-#   20    0011.431b.b291     Gi1/0/16   10.129.20.174    Vendor(manuf='Dell', comment=None)
-# ****************************************************************************
 
 import manuf
 import sys
 import json
+import hashlib
 
-vernum = '1.0'
+vernum = '1.1'
 def version():
     """
     This function prints the version of this program. It doesn't allow any argument.
@@ -74,6 +92,8 @@ print()
 #create an empty dictionary to hold the mac-IP data
 Mac_IP = {}
 IP_Data = ''
+#create an empty list to hold MAC addresses for hashing
+hash_list = []
 #Open the json created by arp.py if it exists
 mydatafile = 'Mac2IP.json'
 try:
@@ -92,8 +112,8 @@ except FileNotFoundError:
             print('mac-addr.txt does not exist')
 else:    
     for line in f:
-#strip out empty lines
-        if line.find('DYNAMIC'):
+#strip out lines without DYNAMIC or dynamic 
+        if line.find('DYNAMIC') != -1 or line.find('dynamic') != -1:
             data.append(line)
     f.close
 ct = len(data)-1
@@ -103,16 +123,13 @@ while counter <= ct:
     IP = data[counter]
 #Remove Enter
     IP = IP.strip('\n')
-#skip any line with the command
-    #if IP.find('show') != -1:
-    if IP.find('DYNAMIC') == -1:
-        counter = counter + 1
-        continue
-#extract MAC Address
+    IP = IP.upper()
+#extract MAC Address and save to hash_list for hashing
 #   2    6cb2.ae09.f8c4    DYNAMIC     Gi2/0/2
     L = str.split(IP)
     Mac = L[1]
-#    print(Mac)
+    Mac = Mac.lower()
+    temp = hash_list.append(Mac)
     if Mac in Mac_IP:
         IP_Data = Mac_IP[Mac]
 
@@ -120,6 +137,9 @@ while counter <= ct:
     manufacture = p.get_all(Mac)
 #strip out the word DYNAMIC
     IP = IP.replace('DYNAMIC    ','')
+#the 6800 series add an * to the beginning of the line.
+#*     239 685b.35c3.4e7a  DYNAMIC  Yes        0     Gi101/1/0/47
+    IP = IP.replace('*     ','')
 #Build the string
     IP = IP + "   "  + IP_Data + "    " + str(manufacture)
     IPs.append(str(IP))
@@ -134,3 +154,26 @@ else:
     print('Vlan     MAC Address      Interface      Vendor')
 for IP in IPs:
     print(IP)
+
+'''
+hash the string of all macs. This gives a quick way to compare the before
+and after MACS
+'''
+
+hash_list_str = str(hash_list)
+#convert the string to bytes
+b = hash_list_str.encode()
+hash_object = hashlib.md5(b)
+print('Hash of all the MAC addresses')
+print(hash_object.hexdigest())
+print()
+
+'''
+print out the MAC Addresses sorted for review. 
+This is useful if the patch cables got mixed up during replacement
+'''
+print('Sorted list of MAC Addresses')
+#print(hash_list)
+for x in sorted(hash_list):
+    print(x)
+print('End of output')
