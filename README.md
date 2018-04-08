@@ -52,9 +52,9 @@ Vlan     MAC Address      Interface      IP           Vendor
 --------------------------------------------------------------------
 
 ```
-**Using [PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html)**
+**Using PingInfoView**
 
-PingInfoView is a great tool from Nirsoft that takes a text file with IP addresses and hostnames and then continuously pings them. It's perfect for making sure all devices are back online after you replace a switch.
+[PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html) is a great free tool from Nirsoft that takes a text file with IP addresses and hostnames and then continuously pings them. It's perfect for making sure all devices are back online after you replace a switch.
 
 Here is output from the script. Obviously, we don't get the hostname from the switch so I use the MAC Address. When PingInfoView is running it will resolve the hostname from DNS if possible.
 ```
