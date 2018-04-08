@@ -63,7 +63,7 @@ PingInfo Data
 10.56.239.240 0026.5535.7b7a
 ```
 Inline-style: 
-![PingInfoView Sample](https://github.com/rikosintie/MAC2Manuf/master/PingInfoView.PNG "PingInfoView Sample")
+![PingInfoView Sample](https://github.com/rikosintie/MAC2Manuf/blob/master/PingInfoView.PNG "PingInfoView Sample")
 
 
 **A Hash of the MACs**
