@@ -67,9 +67,22 @@ PingInfo Data
 
 
 **A Hash of the MACs**
+
 I recently was involved with a switch replacement where the first thirty ports were just edge ports for PCs and phones but the last 18 ports had VMware ESXi, alarms, etc. The cables for the first thirty ports didn't get patched back in the same order that they were originally. Re-running the script after the replacement didn't help verify that everything was back because they were in differnet ports.
 
 I added two outputs to help in this situation. The first is an MD5 hash of the MACs. The script sorts them first so the order on the switch doesn't matter. As a quick check you can just compare the hash before and after.
 
 The second is the sorted output of the MACs. If the hashes don't match, just throw the before and after output into Meld or notepad++ and you will instantly see what is missing. In my case it was three virtual servers off the ESXi host so it was nice to see it quickly and be able to correct it.
+
+Output
+
+```
+Hash of all the MAC addresses
+e414668f2c6214a2fd6f25df7b897eda
+
+Sorted list of MAC Addresses
+000e.7fb4.1919
+0011.85b8.bf8d
+0025.b323.f8cc
+```
 
