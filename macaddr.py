@@ -25,10 +25,10 @@ Output
 Number Entries: 65 
 
 Vlan     MAC Address      Interface
-  10    8434.97a7.708b     Gi1/0/1   Vendor(manuf='HewlettP', comment=None)
-****************************************************************************
-  10    0c4d.e9c1.4a0d     Gi1/0/3   Vendor(manuf='Apple', comment=None)
-****************************************************************************
+  10    8434.97a7.708b     Gi1/0/1   HewlettP
+--------------------------------------------------
+  10    0c4d.e9c1.4a0d     Gi1/0/3   Apple
+--------------------------------------------------
 
 Uses the Parser library for Wireshark's OUI database from https://github.com/coolbho3k/manuf to convert the MAC to a manufacture.
 The database needs to be updated occaisionally using: 
@@ -43,24 +43,31 @@ Mac2IP.json is created by running arp.py against the output "show ip arp" or "sh
 if Mac2IP.json is found in the same directory as macaddr.py it adds the IP address to the output.
 if Mac2IP.json is not found the IP address is not added
 Vlan     MAC Address      Interface      IP           Vendor
-   20    f8b1.56d2.3c13     Gi1/0/3   10.129.20.70    Vendor(manuf='Dell', comment=None)
- ****************************************************************************
-   20    0011.431b.b291     Gi1/0/16   10.129.20.174    Vendor(manuf='Dell', comment=None)
- ****************************************************************************
+   20    f8b1.56d2.3c13     Gi1/0/3   10.129.20.70    Dell
+ ----------------------------------------------------------------
+   20    0011.431b.b291     Gi1/0/16   10.129.20.174    Dell
+ ----------------------------------------------------------------
 
- March 24, 2018
- Added an MD5 hash function to the list of MAC addresses. This gives a quick comparison of the before
- and after is some cables got swapped but are on the correct vlan.
- Added a sorted output of the MAC addresses. If there are differences before and after you 
- can save the list of MACs and use MELD or Notepad++ (with the compare plugin) to see what is different.
+March 24, 2018
+Added an MD5 hash function to the list of MAC addresses. This gives a quick comparison of the before
+and after is some cables got swapped but are on the correct vlan.
+Added a sorted output of the MAC addresses. If there are differences before and after you 
+can save the list of MACs and use MELD or Notepad++ (with the compare plugin) to see what is different.
  
- Hash of all the MAC addresses
- 6449620420f0d67bffd26b65e9a824a4
+Hash of all the MAC addresses
+6449620420f0d67bffd26b65e9a824a4
 
- Sorted list of MAC Addresses
- 0018.c840.1295
- 0018.c840.12a8
- 0027.0dbd.9f6e
+Sorted list of MAC Addresses
+0018.c840.1295
+0018.c840.12a8
+0027.0dbd.9f6e
+
+ April 7, 2018
+Added output for PingInforview (nirsoft.net)
+
+PingInfo Data
+10.56.238.150 b499.ba01.bc82
+10.56.239.240 0026.5535.7b7a
 
 '''
 
@@ -111,14 +118,16 @@ try:
 except FileNotFoundError:
             print('mac-addr.txt does not exist')
 else:    
+#10.56.254.2     00:04:44  c08c.6036.19ef  Vlan254
     for line in f:
 #strip out lines without DYNAMIC or dynamic 
-        if line.find('DYNAMIC') != -1 or line.find('dynamic') != -1:
+        if line.find('.') != -1 or line.find('dynamic') != -1:
             data.append(line)
     f.close
 ct = len(data)-1
 counter = 0
 IPs = []
+print('PingInfo Data')
 while counter <= ct:
     IP = data[counter]
 #Remove Enter
@@ -132,20 +141,23 @@ while counter <= ct:
     temp = hash_list.append(Mac)
     if Mac in Mac_IP:
         IP_Data = Mac_IP[Mac]
-
+#       print the pinginfo data
+        print(IP_Data, Mac)
 #pull the manufacturer with manuf
-    manufacture = p.get_all(Mac)
+    manufacture = p.get_manuf(Mac)
 #strip out the word DYNAMIC
     IP = IP.replace('DYNAMIC    ','')
-#the 6800 series add an * to the beginning of the line.
+#the 6800 series adds an * to the beginning of the line.
 #*     239 685b.35c3.4e7a  DYNAMIC  Yes        0     Gi101/1/0/47
     IP = IP.replace('*     ','')
 #Build the string
     IP = IP + "   "  + IP_Data + "    " + str(manufacture)
     IPs.append(str(IP))
-    IPs.append('****************************************************************************')
+    IPs.append('--------------------------------------------------------------------')
+#    IPs.append('****************************************************************************')
     counter = counter + 1
 d = int(len(IPs)/2) 
+print()
 print ('Number Entries: %s ' %d)
 print()
 if mydatafile:
@@ -164,6 +176,7 @@ hash_list_str = str(hash_list)
 #convert the string to bytes
 b = hash_list_str.encode()
 hash_object = hashlib.md5(b)
+print()
 print('Hash of all the MAC addresses')
 print(hash_object.hexdigest())
 print()
