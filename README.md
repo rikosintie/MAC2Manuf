@@ -1,10 +1,11 @@
 # MAC2Manuf
 Convert the output from "show mac add int g1/0/1 | i Gi" to the manufacturer name.
 
-Requires Wireshark, because it uses Michael Huang's manuf python library at [Parser library for Wireshark's OUI database.](https://github.com/coolbho3k/manuf)
-Requires Python 3.x
+The script uses Michael Huang's manuf python library at [Parser library for Wireshark's OUI database.](https://github.com/coolbho3k/manuf)
 
-Useful when you are looking for a specific brand device and have a lot of ports to review. I think this would also be useful when replacing a switch. Run it before the cutover and save the results, then run it after the cutover and use [Meld](meldmerge.org) or your favorite comparison tool to make sure all MACs are in the correct port.
+Requires Python 3.x, json library, hashlib library
+
+Useful when you are looking for a specific brand device and have a lot of ports to review. It is also useful when replacing a switch. Run it before the cutover and save the results, then run it after the cutover and use [Meld](meldmerge.org) or your favorite comparison tool to make sure all MACs are in the correct port.
 
 The included spreadsheet has the show commands for Gigabit, FastEthernet, the old 3550 and a FEX switch pre-built.
 
@@ -28,25 +29,47 @@ The Python script will clean up the output and look up the manufacture in the Wi
 The output will look simiiar to this:
 ```
 Entries: 65 
-Vlan     MAC Address      Interface
-  10    8434.97a7.708b     Gi1/0/1   Vendor(manuf='HewlettP', comment=None)
-****************************************************************************
-  10    0c4d.e9c1.4a0d     Gi1/0/3   Vendor(manuf='Apple', comment=None)
-****************************************************************************
-  10    0c4d.e9c1.363c     Gi1/0/5   Vendor(manuf='Apple', comment=None)
-****************************************************************************
+Vlan     MAC Address      Interface  Vendor
+  10    8434.97a7.708b     Gi1/0/1   HewlettP
+-----------------------------------------------
+  10    0c4d.e9c1.4a0d     Gi1/0/3   Apple
+-----------------------------------------------
+  10    0c4d.e9c1.363c     Gi1/0/5   Apple
+-----------------------------------------------
 ```
 **Add the IP address**
 
-You can use the python script arp.py [ARP-Sort](https://github.com/rikosintie/ARP-Sort) to convert the output of `show ip arp` on a core switch to MAC addresses/IP Addresses. It also creates a JSON file that macaddr.py can read. If you create the json file before running macaddr.py you will get output that looks like this:
+You can use the python script [arp.py](https://github.com/rikosintie/ARP-Sort) to convert the output of `show ip arp` on a core switch to MAC addresses/IP Addresses. It also creates a JSON file that macaddr.py can read. If you create the json file before running macaddr.py you will get output that looks like this:
 ```
-Number Entries: 49 
+Number Entries: 29 
 
 Vlan     MAC Address      Interface      IP           Vendor
-  20    f8b1.56d2.3c13     Gi1/0/3   10.129.20.70    Vendor(manuf='Dell', comment=None)
-****************************************************************************
-  20    0011.431b.b291     Gi1/0/16   10.129.20.174    Vendor(manuf='Dell', comment=None)
-****************************************************************************
-```
+ 238    B499.BA01.BC82     GI3/0/1   10.56.238.150    HewlettP
+--------------------------------------------------------------------
+ 239    0026.5535.7B7A     GI3/0/6   10.56.239.240    HewlettP
+--------------------------------------------------------------------
+ 238    5065.F360.D1AA     GI3/0/7   10.56.238.117    HewlettP
+--------------------------------------------------------------------
 
+```
+**Using [PingInfoView](https://www.nirsoft.net/utils/multiple_ping_tool.html)**
+
+PingInfoView is a great tool from Nirsoft that takes a text file with IP addresses and hostnames and then continuously pings them. It's perfect for making sure all devices are back online after you replace a switch.
+
+Here is output from the script. Obviously, we don't get the hostname from the switch so I use the MAC Address. When PingInfoView is running it will resolve the hostname from DNS if possible.
+```
+PingInfo Data
+10.56.238.150 b499.ba01.bc82
+10.56.239.240 0026.5535.7b7a
+```
+Inline-style: 
+![PingInfoView Sample](https://github.com/rikosintie/MAC2Manuf/master/PingInfoView.PNG "PingInfoView Sample")
+
+
+**A Hash of the MACs**
+I recently was involved with a switch replacement where the first thirty ports were just edge ports for PCs and phones but the last 18 ports had VMware ESXi, alarms, etc. The cables for the first thirty ports didn't get patched back in the same order that they were originally. Re-running the script after the replacement didn't help verify that everything was back because they were in differnet ports.
+
+I added two outputs to help in this situation. The first is an MD5 hash of the MACs. The script sorts them first so the order on the switch doesn't matter. As a quick check you can just compare the hash before and after.
+
+The second is the sorted output of the MACs. If the hashes don't match, just throw the before and after output into Meld or notepad++ and you will instantly see what is missing. In my case it was three virtual servers off the ESXi host so it was nice to see it quickly and be able to correct it.
 
