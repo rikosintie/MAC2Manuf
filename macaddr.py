@@ -39,7 +39,7 @@ python3 manuf.py -u
 
 Changelog
 March 7, 2018
-Added code to read Mac2IP.json and save it as a dictionary.
+Added code to read Mac2IP.json and use it as a dictionary of IP to MAC.
 Mac2IP.json is created by running arp.py against the output
 "show ip arp" or "sh ip arp vlan x" on a core switch
 if Mac2IP.json is found in the same directory as macaddr.py it adds the
@@ -74,6 +74,9 @@ PingInfo Data
 10.56.238.150 b499.ba01.bc82
 10.56.239.240 0026.5535.7b7a
 
+April 30, 2018
+Added better error trapping for the json and mac-addr.txt.
+Stopped stripping DYNAMIC and STATIC from the input.
 '''
 
 import manuf
@@ -144,6 +147,10 @@ while counter <= ct:
     IP = data[counter]
 # Remove Enter
     IP = IP.strip('\n')
+#   The Nexus line adds an * add spaces to the front of the line
+    IP = IP.strip('*    ')
+#   The Nexus line includes additional fields that need to be stripped
+    IP = IP.replace('  0         F      F   ','')
     IP = IP.upper()
 # extract MAC Address and save to hash_list for hashing
 #   2    6cb2.ae09.f8c4    DYNAMIC     Gi2/0/2
