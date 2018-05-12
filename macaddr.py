@@ -83,6 +83,7 @@ import manuf
 import sys
 import json
 import hashlib
+import re
 
 vernum = '1.1'
 
@@ -105,8 +106,11 @@ def version():
 
 
 version()
-
-# create a space between the command line and the output
+# MAC addresses are expressed differently depending on the manufacture and even model device
+# the formats that this script can parse are:
+# 0a:0a:0a:0a:0a:0a, 0a-0a-0a-0a-0a-0a, 0a0a0a.0a0a0a0 and 0a0a0a-0a0a0a
+# this should cover most Cisco and HP devices.
+#  
 print()
 # create an empty dictionary to hold the mac-IP data
 Mac_IP = {}
@@ -132,10 +136,12 @@ except FileNotFoundError as fnf_error:
             print(fnf_error)
             sys.exit(0)
 else:
-    # 10.56.254.2     00:04:44  c08c.6036.19ef  Vlan254
     for line in f:
-        # strip out lines without DYNAMIC or dynamic
-        if line.find('.') != -1 or line.find('dynamic') != -1:
+        match_PC = re.search(r'([0-9A-F]{2}[-:]){5}([0-9A-F]{2})', line, re.I)
+        match_Cisco = re.search(r'([0-9A-F]{4}[.]){2}([0-9A-F]{4})', line, re.I)
+        match_HP = re.search(r'([0-9A-F]{6}[-])([0-9A-F]{6})', line, re.I)
+        # strip out lines without a mac address
+        if match_PC or match_Cisco or match_HP:
             data.append(line)
     f.close
 ct = len(data)-1
