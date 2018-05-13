@@ -117,7 +117,7 @@ Mac_IP = {}
 IP_Data = ''
 # create an empty list to hold MAC addresses for hashing
 hash_list = []
-# pen the json created by arp.py if it exists
+# open the json created by arp.py if it exists
 my_json_file = 'Mac2IP.json'
 try:
     with open(my_json_file) as f:
@@ -151,18 +151,20 @@ print()
 print('PingInfo Data')
 while counter <= ct:
     IP = data[counter]
-# Remove Enter
+# Remove newline at end
     IP = IP.strip('\n')
-#   The Nexus line adds an * add spaces to the front of the line
+#   The Nexus line adds an * and spaces to the front of the line
     IP = IP.strip('*    ')
 #   The Nexus line includes additional fields that need to be stripped
     IP = IP.replace('  0         F      F   ','')
-    IP = IP.upper()
+    IP = IP.replace('    ~~~      F    F ','')
+#    IP = IP.upper()
 # extract MAC Address and save to hash_list for hashing
-#   2    6cb2.ae09.f8c4    DYNAMIC     Gi2/0/2
     L = str.split(IP)
+    Vlan = L[0]
     Mac = L[1]
-    Mac = Mac.lower()
+    Mac_Type = L[2]
+    Interface_Num = L[3]
     temp = hash_list.append(Mac)
     if Mac in Mac_IP:
         IP_Data = Mac_IP[Mac]
@@ -170,24 +172,41 @@ while counter <= ct:
         print(IP_Data, Mac)
 # pull the manufacturer with manuf
     manufacture = p.get_manuf(Mac)
-# strip out the word DYNAMIC
-#    IP = IP.replace('DYNAMIC    ', '')
-# the 6800 series adds an * to the beginning of the line.
-# *     239 685b.35c3.4e7a  DYNAMIC  Yes        0     Gi101/1/0/47
-    IP = IP.replace('*     ', '')
+# Pad with spaces for output alignment    
+    Pad = 7 - len(Vlan)
+    Vlan = Vlan + (' ' * Pad) 
+# Pad MAC Address Field    
+    Pad = 17 - len(Mac)
+    Mac = Mac + (' ' * Pad)
+# Pad type field
+    Pad = 11 - len(Mac_Type)
+    Mac_Type = Mac_Type + (' ' * Pad)
+# Pad Interface
+    Pad = 12 - len(Interface_Num)
+    Interface_Num = Interface_Num + (' ' * Pad)
+# Pad IP address field if the json file exists
+    if my_json_file:
+        Pad = 17 - len(IP_Data)
+        IP_Data = IP_Data + (' ' * Pad)
+        Pad = '--' * 40
+    else:
+        Pad = '--' * 30
 # Build the string
-    IP = IP + "   " + IP_Data + "    " + str(manufacture)
+    IP = Vlan + Mac + Mac_Type + Interface_Num + IP_Data + str(manufacture)
     IPs.append(str(IP))
-    IPs.append('--' * 35)
+#    IPs.append('--' * 40)
+    IPs.append(Pad)
     counter = counter + 1
 d = int(len(IPs)/2)
 print()
 print('Number Entries: %s ' % d)
 print()
 if my_json_file:
-    print('Vlan     MAC Address      Type       Interface      IP           Vendor')
+    print('Vlan   MAC Address      Type       Interface   IP               Vendor')
+    print('--' * 40)
 else:
-    print('Vlan     MAC Address      Type       Interface      Vendor')
+    print('Vlan   MAC Address      Type       Interface   Vendor')
+    print('--' * 30)
 for IP in IPs:
     print(IP)
 
