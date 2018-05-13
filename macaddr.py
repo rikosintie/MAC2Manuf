@@ -202,7 +202,7 @@ print()
 print('Number of Entries: %s ' % d)
 print()
 if my_json_file:
-    print('Vlan   MAC Address      Type       Interface   IP               Vendor')
+    print('Vlan   MAC Address      Type       Interface   IP Address       Vendor')
     print('--' * 40)
 else:
     print('Vlan   MAC Address      Type       Interface   Vendor')
