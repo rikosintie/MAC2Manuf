@@ -30,28 +30,43 @@ The Python script will clean up the output and look up the manufacture in the Wi
 
 The output will look simiiar to this:
 ```
-Entries: 65 
-Vlan     MAC Address      Interface  Vendor
-  10    8434.97a7.708b     Gi1/0/1   HewlettP
------------------------------------------------
-  10    0c4d.e9c1.4a0d     Gi1/0/3   Apple
------------------------------------------------
-  10    0c4d.e9c1.363c     Gi1/0/5   Apple
------------------------------------------------
+Number Entries: 53 
+
+Vlan   MAC Address      Type       Interface   Vendor
+------------------------------------------------------------
+45     2c59.e57b.ce46   DYNAMIC    Gi1/0/16    HewlettP
+------------------------------------------------------------
+45     2c59.e5d4.c1f9   DYNAMIC    Gi1/0/43    HewlettP
+------------------------------------------------------------
+45     001e.0b08.81bc   DYNAMIC    Gi1/0/47    HewlettP
+------------------------------------------------------------
+45     38ea.a709.cbbf   DYNAMIC    Gi2/0/18    HewlettP
+------------------------------------------------------------
+45     509a.4c3e.61eb   DYNAMIC    Gi2/0/44    Dell
+------------------------------------------------------------
+45     0026.735a.00c8   DYNAMIC    Gi4/0/13    Ricoh
 ```
 **Add the IP address**
 
 You can use the python script [arp.py](https://github.com/rikosintie/ARP-Sort) to convert the output of `show ip arp` on a core switch to MAC addresses/IP Addresses. It also creates a JSON file that macaddr.py can read. If you create the json file before running macaddr.py you will get output that looks like this:
 ```
-Number Entries: 29 
+Number Entries: 53 
 
-Vlan     MAC Address      Interface      IP           Vendor
- 238    B499.BA01.BC82     GI3/0/1   10.56.238.150    HewlettP
---------------------------------------------------------------------
- 239    0026.5535.7B7A     GI3/0/6   10.56.239.240    HewlettP
---------------------------------------------------------------------
- 238    5065.F360.D1AA     GI3/0/7   10.56.238.117    HewlettP
---------------------------------------------------------------------
+Vlan   MAC Address      Type       Interface   IP               Vendor
+--------------------------------------------------------------------------------
+45     2c59.e57b.ce46   DYNAMIC    Gi1/0/16    125.180.245.28   HewlettP
+--------------------------------------------------------------------------------
+45     2c59.e5d4.c1f9   DYNAMIC    Gi1/0/43    125.180.245.31   HewlettP
+--------------------------------------------------------------------------------
+45     001e.0b08.81bc   DYNAMIC    Gi1/0/47    125.180.245.45   HewlettP
+--------------------------------------------------------------------------------
+45     38ea.a709.cbbf   DYNAMIC    Gi2/0/18    125.180.245.22   HewlettP
+--------------------------------------------------------------------------------
+45     509a.4c3e.61eb   DYNAMIC    Gi2/0/44    125.180.245.40   Dell
+--------------------------------------------------------------------------------
+45     0026.735a.00c8   DYNAMIC    Gi4/0/13    125.180.245.90   Ricoh
+--------------------------------------------------------------------------------
+45     6416.7f93.892a   DYNAMIC    Gi4/0/15    125.180.252.39   Polycom
 
 ```
 **Using PingInfoView**
