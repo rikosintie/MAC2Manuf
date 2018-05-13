@@ -199,7 +199,7 @@ while counter <= ct:
     counter = counter + 1
 d = int(len(IPs)/2)
 print()
-print('Number Entries: %s ' % d)
+print('Number of Entries: %s ' % d)
 print()
 if my_json_file:
     print('Vlan   MAC Address      Type       Interface   IP               Vendor')
