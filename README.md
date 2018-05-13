@@ -9,7 +9,7 @@ Useful when you are looking for a specific brand device and have a lot of ports 
 
 The included spreadsheet has the show commands for Gigabit, FastEthernet, the old 3550 and a FEX switch pre-built.
 
-NOTE: To download the spreadsheep click on it and then select Download. Do not right click and select "Save Link As...".
+NOTE: To download the spreadsheet, click on it and then select Download. Do not right click and select "Save Link As...".
 
 The output will look similar to this:
 ```
