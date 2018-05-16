@@ -110,7 +110,7 @@ version()
 # the formats that this script can parse are:
 # 0a:0a:0a:0a:0a:0a, 0a-0a-0a-0a-0a-0a, 0a0a0a.0a0a0a0 and 0a0a0a-0a0a0a
 # this should cover most Cisco and HP devices.
-#  
+#
 print()
 # create an empty dictionary to hold the mac-IP data
 Mac_IP = {}
@@ -158,7 +158,6 @@ while counter <= ct:
 #   The Nexus line includes additional fields that need to be stripped
     IP = IP.replace('  0         F      F   ','')
     IP = IP.replace('    ~~~      F    F ','')
-#    IP = IP.upper()
 # extract MAC Address and save to hash_list for hashing
     L = str.split(IP)
     Vlan = L[0]
@@ -172,10 +171,10 @@ while counter <= ct:
         print(IP_Data, Mac)
 # pull the manufacturer with manuf
     manufacture = p.get_manuf(Mac)
-# Pad with spaces for output alignment    
+# Pad with spaces for output alignment
     Pad = 7 - len(Vlan)
-    Vlan = Vlan + (' ' * Pad) 
-# Pad MAC Address Field    
+    Vlan = Vlan + (' ' * Pad)
+# Pad MAC Address Field
     Pad = 17 - len(Mac)
     Mac = Mac + (' ' * Pad)
 # Pad type field
@@ -192,17 +191,19 @@ while counter <= ct:
     else:
         Pad = '--' * 30
 # Build the string
-    IP = Vlan + Mac + Mac_Type + Interface_Num + IP_Data + str(manufacture)
+    IP = Vlan + IP_Data + Mac + Mac_Type + Interface_Num + str(manufacture)
     IPs.append(str(IP))
 #    IPs.append('--' * 40)
     IPs.append(Pad)
+# Clear the IP address in case the next interface has a MAC but no IP address
+    IP_Data = ''    
     counter = counter + 1
 d = int(len(IPs)/2)
 print()
 print('Number of Entries: %s ' % d)
 print()
 if my_json_file:
-    print('Vlan   MAC Address      Type       Interface   IP Address       Vendor')
+    print('Vlan   IP Address       MAC Address      Type       Interface   Vendor')
     print('--' * 40)
 else:
     print('Vlan   MAC Address      Type       Interface   Vendor')
