@@ -102,4 +102,8 @@ Sorted list of MAC Addresses
 0011.85b8.bf8d
 0025.b323.f8cc
 ```
+Here is a terminal recoding of the script in action [python3 macaddr.py](https://asciinema.org/a/bVnJgjbb9RrpfgUuxMHnud7PX)
+
+asciicinema is a cool little python script for recording terminal sessions. It can be found on github.com here:
+[asciicinema](https://github.com/asciinema/asciinema)
 
