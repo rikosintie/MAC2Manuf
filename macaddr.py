@@ -67,8 +67,8 @@ Sorted list of MAC Addresses
 0018.c840.12a8
 0027.0dbd.9f6e
 
- April 7, 2018
-Added output for PingInforview (nirsoft.net)
+April 7, 2018
+Added output for PingInfoView (nirsoft.net)
 
 PingInfo Data
 10.56.238.150 b499.ba01.bc82
@@ -77,6 +77,14 @@ PingInfo Data
 April 30, 2018
 Added better error trapping for the json and mac-addr.txt.
 Stopped stripping DYNAMIC and STATIC from the input.
+
+May 15, 2018
+Fixed a bug in the IP address selection loop. I wasn't clearing IP_Data at the
+end of the loop so is an interface didn't have an IP address in the json file
+it would use the last IP address.
+
+Clear the IP address in case the next interface has a MAC but no IP address
+    IP_Data = ''
 '''
 
 import manuf
@@ -164,6 +172,10 @@ while counter <= ct:
     Mac = L[1]
     Mac_Type = L[2]
     Interface_Num = L[3]
+# The 6880x puts age of the mac in the cache after the mac type.
+# In that case the Interface_Num will be index 5 instead of 3.    
+    if Interface_Num.find('/') == -1:
+        Interface_Num = L[5]
     temp = hash_list.append(Mac)
     if Mac in Mac_IP:
         IP_Data = Mac_IP[Mac]
@@ -172,10 +184,11 @@ while counter <= ct:
 # pull the manufacturer with manuf
     manufacture = p.get_manuf(Mac)
 # Pad with spaces for output alignment
-    Pad = 7 - len(Vlan)
-    Vlan = Vlan + (' ' * Pad)
+    Front_Pad = 4 - len(Vlan)
+    Pad = 7 - len(Vlan) - Front_Pad
+    Vlan = (' ' * Front_Pad) + Vlan + (' ' * Pad)
 # Pad MAC Address Field
-    Pad = 17 - len(Mac)
+    Pad = 18 - len(Mac)
     Mac = Mac + (' ' * Pad)
 # Pad type field
     Pad = 11 - len(Mac_Type)
@@ -187,8 +200,10 @@ while counter <= ct:
     if my_json_file:
         Pad = 17 - len(IP_Data)
         IP_Data = IP_Data + (' ' * Pad)
+# create the separator at 80 characters
         Pad = '--' * 40
     else:
+# if not create the separator at 60 characters since there won't be IPs
         Pad = '--' * 30
 # Build the string
     IP = Vlan + IP_Data + Mac + Mac_Type + Interface_Num + str(manufacture)
@@ -196,17 +211,17 @@ while counter <= ct:
 #    IPs.append('--' * 40)
     IPs.append(Pad)
 # Clear the IP address in case the next interface has a MAC but no IP address
-    IP_Data = ''    
+    IP_Data = ''
     counter = counter + 1
 d = int(len(IPs)/2)
 print()
 print('Number of Entries: %s ' % d)
 print()
 if my_json_file:
-    print('Vlan   IP Address       MAC Address      Type       Interface   Vendor')
+    print('Vlan   IP Address       MAC Address       Type       Interface   Vendor')
     print('--' * 40)
 else:
-    print('Vlan   MAC Address      Type       Interface   Vendor')
+    print('Vlan   MAC Address       Type       Interface   Vendor')
     print('--' * 30)
 for IP in IPs:
     print(IP)
