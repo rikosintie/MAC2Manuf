@@ -171,11 +171,16 @@ while counter <= ct:
     Vlan = L[0]
     Mac = L[1]
     Mac_Type = L[2]
-    Interface_Num = L[3]
-# The 6880x puts age of the mac in the cache after the mac type.
-# In that case the Interface_Num will be index 5 instead of 3.    
-    if Interface_Num.find('/') == -1:
-        Interface_Num = L[5]
+# The interface isn't in the same location in the output on all switches
+# This loop seaches for a / in the value before picking the interface.
+    ct2 = len(L)
+    count2 = 3
+    while count2 < ct2:
+        Interface_Num = L[count2]
+        if Interface_Num.find('/') == -1:
+            count2 += 1
+        else:
+            break
     temp = hash_list.append(Mac)
     if Mac in Mac_IP:
         IP_Data = Mac_IP[Mac]
