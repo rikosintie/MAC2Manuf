@@ -5,6 +5,7 @@ https://stackoverflow.com/questions/20944483/python-3-sort-a-dict-by-its-values
 https://docs.python.org/3.3/tutorial/datastructures.html
 https://www.quora.com/How-do-I-write-a-dictionary-to-a-file-in-Python
 https://www.programiz.com/python-programming/break-continue
+https://www.ascii-art-generator.org/
 
 read mac-addr.txt containing the output of
 show mac add int g1/0/1 | i Gi
@@ -94,13 +95,20 @@ import hashlib
 import re
 
 vernum = '1.1'
-
+AsciiArt = '''
+ __  __    _    ____   ____    __  __                    __            _
+|  \/  |  / \  / ___| |___ \  |  \/  | __ _ _ __  _   _ / _| __ _  ___| |_
+| |\/| | / _ \| |       __) | | |\/| |/ _` | '_ \| | | | |_ / _` |/ __| __|
+| |  | |/ ___ \ |___   / __/  | |  | | (_| | | | | |_| |  _| (_| | (__| |_
+|_|  |_/_/   \_\____| |_____| |_|  |_|\__,_|_| |_|\__,_|_|  \__,_|\___|\__|
+'''
 
 def version():
     """
     This function prints the version of this program. It doesn't allow
     any argument.
     """
+    print(AsciiArt)
     print("+----------------------------------------------------------------------+")
     print("| "+ sys.argv[0] + " Version "+ vernum +"                                               |")
     print("| This program is free software; you can redistribute it and/or modify |")
@@ -171,19 +179,28 @@ while counter <= ct:
     Vlan = L[0]
     Mac = L[1]
     Mac_Type = L[2]
+    Interface_Num = L[3]
 # The interface isn't in the same location in the output on all switches
 # This loop seaches for a / in the value before picking the interface.
+# Old method *******************************************
+#    if Interface_Num.find('/') == -1:
+#        Interface_Num = L[5]
+# ******************************************************
     ct2 = len(L)
-    count2 = 3
+    count2 = 4
     while count2 < ct2:
         Interface_Num = L[count2]
         if Interface_Num.find('/') == -1:
             count2 += 1
+            print(Interface_Num)
         else:
-            break
+             break
+#            continue
     temp = hash_list.append(Mac)
     if Mac in Mac_IP:
         IP_Data = Mac_IP[Mac]
+    else:
+        IP_Data = 'No Match'
 #       print the pinginfo data
         print(IP_Data, Mac)
 # pull the manufacturer with manuf
