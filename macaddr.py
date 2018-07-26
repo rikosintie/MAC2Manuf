@@ -131,6 +131,7 @@ print()
 # create an empty dictionary to hold the mac-IP data
 Mac_IP = {}
 IP_Data = ''
+device_name = ''
 # create an empty list to hold MAC addresses for hashing
 hash_list = []
 # open the json created by arp.py if it exists
@@ -159,11 +160,16 @@ else:
         # strip out lines without a mac address
         if match_PC or match_Cisco or match_HP:
             data.append(line)
+        device_name_loc = line.find('#')
+        if device_name_loc != -1:
+            device_name = line[0:device_name_loc]
+            device_name = device_name.strip()
     f.close
 ct = len(data)-1
 counter = 0
 IPs = []
 print()
+print('Device Name: %s ' % device_name)
 print('PingInfo Data')
 while counter <= ct:
     IP = data[counter]
@@ -239,6 +245,7 @@ d = int(len(IPs)/2)
 print()
 print('Number of Entries: %s ' % d)
 print()
+print('Device Name: %s ' % device_name)
 if my_json_file:
     print('Vlan   IP Address       MAC Address       Type       Interface   Vendor')
     print('--' * 40)
