@@ -131,6 +131,7 @@ print()
 # create an empty dictionary to hold the mac-IP data
 Mac_IP = {}
 IP_Data = ''
+device_name = ''
 # create an empty list to hold MAC addresses for hashing
 hash_list = []
 # open the json created by arp.py if it exists
@@ -159,11 +160,16 @@ else:
         # strip out lines without a mac address
         if match_PC or match_Cisco or match_HP:
             data.append(line)
+        device_name_loc = line.find('#')
+        if device_name_loc != -1:
+            device_name = line[0:device_name_loc]
+            device_name = device_name.strip()
     f.close
 ct = len(data)-1
 counter = 0
 IPs = []
 print()
+print('Device Name: %s ' % device_name)
 print('PingInfo Data')
 while counter <= ct:
     IP = data[counter]
@@ -179,6 +185,7 @@ while counter <= ct:
     Vlan = L[0]
     Mac = L[1]
     Mac_Type = L[2]
+    Interface_Num = L[3]
 # The interface isn't in the same location in the output on all switches
 # This loop seaches for a / in the value before picking the interface.
 # Old method *******************************************
@@ -191,12 +198,15 @@ while counter <= ct:
         Interface_Num = L[count2]
         if Interface_Num.find('/') == -1:
             count2 += 1
+            print(Interface_Num)
         else:
-            break
-#           continue
+             break
+#            continue
     temp = hash_list.append(Mac)
     if Mac in Mac_IP:
         IP_Data = Mac_IP[Mac]
+    else:
+        IP_Data = 'No Match'
 #       print the pinginfo data
         print(IP_Data, Mac)
 # pull the manufacturer with manuf
@@ -212,7 +222,7 @@ while counter <= ct:
     Pad = 11 - len(Mac_Type)
     Mac_Type = Mac_Type + (' ' * Pad)
 # Pad Interface
-    Pad = 13 - len(Interface_Num)
+    Pad = 12 - len(Interface_Num)
     Interface_Num = Interface_Num + (' ' * Pad)
 # Pad IP address field if the json file exists
     if my_json_file:
@@ -235,6 +245,7 @@ d = int(len(IPs)/2)
 print()
 print('Number of Entries: %s ' % d)
 print()
+print('Device Name: %s ' % device_name)
 if my_json_file:
     print('Vlan   IP Address       MAC Address       Type       Interface   Vendor')
     print('--' * 40)
