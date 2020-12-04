@@ -150,8 +150,8 @@ mydatafile = 'mac-addr.txt'
 try:
     f = open(mydatafile, 'r')
 except FileNotFoundError as fnf_error:
-            print(fnf_error)
-            sys.exit(0)
+    print(fnf_error)
+    sys.exit(0)
 else:
     for line in f:
         match_PC = re.search(r'([0-9A-F]{2}[-:]){5}([0-9A-F]{2})', line, re.I)
@@ -193,22 +193,22 @@ while counter <= ct:
 #        Interface_Num = L[5]
 # ******************************************************
     ct2 = len(L)
-    count2 = 4
+    count2 = 2
     while count2 < ct2:
         Interface_Num = L[count2]
         if Interface_Num.find('/') == -1:
             count2 += 1
             print(Interface_Num)
         else:
-             break
+            break
 #            continue
     temp = hash_list.append(Mac)
     if Mac in Mac_IP:
         IP_Data = Mac_IP[Mac]
     else:
-        IP_Data = 'No Match'
+        IP_Data = 'No-Match'
 #       print the pinginfo data
-        print(IP_Data, Mac)
+    print(IP_Data, Mac)
 # pull the manufacturer with manuf
     manufacture = p.get_manuf(Mac)
 # Pad with spaces for output alignment
