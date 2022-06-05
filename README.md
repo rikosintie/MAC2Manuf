@@ -1,3 +1,7 @@
+[![made-with-python](https://img.shields.io/badge/Made%20with-Python-1f425f.svg)](https://www.python.org/)
+![GitHub language count](https://img.shields.io/github/languages/count/rikosintie/nmap-python)
+![Twitter Follow](https://img.shields.io/twitter/follow/rikosintie?style=social)
+
 # MAC2Manuf
 Convert the output from "show mac add int g1/0/1 | i Gi" to the manufacturer name.
 
