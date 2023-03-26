@@ -7,8 +7,32 @@ Convert the output from "show mac add int g1/0/1 | i Gi" to the manufacturer nam
 
 The script uses Michael Huang's manuf python library at [Parser library for Wireshark's OUI database.](https://github.com/coolbho3k/manuf)
 
-Requires Python 3.x, json library, hashlib library
+Requires Python 3.x, json library, hashlib, icecream library
 
+To install the libraries:
+
+```
+python -m pip install json
+python -m pip install hashlib
+```
+
+The icecream library is used for debugging. 
+
+To install icecream run the following:  
+`python -m pip install icecream`
+
+If you don't plan to modify the script you can just delete:
+```
+from icecream import ic
+# ic.enable()
+ic.disable()
+```
+and any line that starts with `ic()`.
+
+If you do any python programming I recommend that you look at the icecream library for debugging.  
+[icecream on github.com](https://github.com/gruns/icecream)
+
+## What would I use the script for?
 Useful when you are looking for a specific brand device and have a lot of ports to review. It is also useful when replacing a switch. Run it before the cutover and save the results, then run it after the cutover and use [Meld](meldmerge.org) or your favorite comparison tool to make sure all MACs are in the correct port.
 
 The included spreadsheet has the show commands for Gigabit, FastEthernet, the old 3550 and a FEX switch pre-built.
