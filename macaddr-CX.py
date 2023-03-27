@@ -3,12 +3,13 @@ import json
 import re
 import sys
 
-from icecream import ic
-
 import manuf
 
+# from icecream import ic
+
+
 #  ic.enable()
-ic.disable()
+# ic.disable()
 
 '''
 References:
@@ -195,7 +196,7 @@ except FileNotFoundError as fnf_error:
 p = manuf.MacParser()
 # create a blank list to accept each line in the file
 data = []
-mydatafile = 'mac-addr.txt'
+mydatafile = 'mac-addr-cx.txt'
 try:
     f = open(mydatafile, 'r')
 except FileNotFoundError as fnf_error:
@@ -214,6 +215,17 @@ else:
             device_name = line[0:device_name_loc]
             device_name = device_name.strip()
     f.close
+try:
+    save_device = device_name + "-macs.txt"
+    device_file = open(save_device, 'w')
+    for line in data:
+        device_file.write(line)
+    device_file.close()
+except FileNotFoundError as fnf_error:
+    print(fnf_error)
+    sys.exit(0)
+
+
 ct = len(data)-1
 counter = 0
 IPs = []
@@ -224,7 +236,7 @@ print('PingInfo Data')
 while counter <= ct:
     IP = data[counter]
     IP_test = IP.split()
-    ic(IP_test)
+    #ic(IP_test)
 # Remove newline at end
     IP = IP.strip('\n')
 #   The Nexus line adds an * and spaces to the front of the line
@@ -234,15 +246,15 @@ while counter <= ct:
     IP = IP.replace('    ~~~      F    F ', '')
 # extract MAC Address and save to hash_list for hashing
     L = str.split(IP)
-    ic(L)
-    Vlan = L[0]
-    Mac = L[1]
+    #ic(L)
+    Vlan = L[1]
+    Mac = L[0]
     # convert cisco format to aruba format
     Mac = format_mac(Mac)
     # Mac_Type = L[2]
     # ic(Mac_Type)
     # Interface_Num = L[3]
-    Interface_Num = L[5]
+    Interface_Num = L[3]
 
 # The interface isn't in the same location in the output on all switches
 # This loop seaches for a / in the value before picking the interface.
@@ -254,7 +266,7 @@ while counter <= ct:
     count2 = 2
     while count2 < ct2:
         Interface_Num = L[count2]
-        ic(Interface_Num)
+        #ic(Interface_Num)
         if Interface_Num.find('/') == -1:
             count2 += 1
             # print(Interface_Num) uncomment if interface doesn't print
